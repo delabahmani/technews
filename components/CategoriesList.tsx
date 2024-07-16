@@ -8,7 +8,7 @@ export default function CategoriesList() {
         categoriesData.map((category) => (
           <Link
             className="px-4 py-1 rounded-md bg-slate-800 text-white cursor-pointer"
-            href={`/categories/${category.name}`}
+            href={`/categories/${category.name}`} key={category.id}
           >
             {category.name}
           </Link>

@@ -10,7 +10,7 @@ export const postsData = [
     links: [
       "https://www.theguardian.com/us-news/2023/sep/07/asylum-seekers-ai-translation-apps",
     ],
-    thumbnail: "https://example,com/thumbnail1.jpg",
+    thumbnail: "https://images.pexels.com/photos/5326566/pexels-photo-5326566.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     id: "2",
@@ -23,7 +23,7 @@ export const postsData = [
     links: [
       "https://www.cnbc.com/2023/10/11/phones-with-self-healing-displays-to-arrive-by-2028-analysts-predict.html",
     ],
-    thumbnail: "https://example,com/thumbnail2.jpg",
+    thumbnail: "https://images.pexels.com/photos/5326566/pexels-photo-5326566.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     id: "3",
@@ -37,7 +37,7 @@ export const postsData = [
     links: [
       "https://money.usnews.com/money/personal-finance/articles/online-shopping-scams-to-avoid-this-holiday-season",
     ],
-    thumbnail: "https://example,com/thumbnail3.jpg",
+    thumbnail: "https://images.pexels.com/photos/22817299/pexels-photo-22817299/free-photo-of-vase-of-purple-flowers-by-the-window.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     id: "4",
@@ -48,7 +48,7 @@ export const postsData = [
     datepublished: "2024-07-11",
     category: "Space Exploration",
     links: ["https://www.youtube.com/watch?v=uKbbmRrzQLs"],
-    thumbnail: "https://example,com/thumbnail4.jpg",
+    thumbnail: "https://images.pexels.com/photos/22817299/pexels-photo-22817299/free-photo-of-vase-of-purple-flowers-by-the-window.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
 
   {
@@ -60,7 +60,7 @@ export const postsData = [
     datepublished: "2024-07-12",
     category: "Tips & Tricks",
     links: ["https://www.theverge.com/photography"],
-    thumbnail: "https://example,com/thumbnail6.jpg",
+    thumbnail: "https://images.pexels.com/photos/22817299/pexels-photo-22817299/free-photo-of-vase-of-purple-flowers-by-the-window.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     id: "6",
@@ -72,7 +72,7 @@ export const postsData = [
     datepublished: "2024-07-14",
     category: "AI",
     links: ["https://www.ai-tutor.app/"],
-    thumbnail: "https://example,com/thumbnail7.jpg",
+    thumbnail: "https://images.pexels.com/photos/22817299/pexels-photo-22817299/free-photo-of-vase-of-purple-flowers-by-the-window.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
   {
     id: "7",
@@ -85,7 +85,7 @@ export const postsData = [
     links: [
       "https://www.forbes.com/advisor/education/bootcamps/coding-bootcamps-survey/",
     ],
-    thumbnail: "https://example,com/thumbnail8.jpg",
+    thumbnail: "",
   },
   {
     id: "8",
@@ -98,7 +98,7 @@ export const postsData = [
     links: [
       "https://www.nytimes.com/2022/10/07/technology/metaverse-facebook-horizon-worlds.html",
     ],
-    thumbnail: "https://example,com/thumbnail5.jpg",
+    thumbnail: "https://images.pexels.com/photos/22817299/pexels-photo-22817299/free-photo-of-vase-of-purple-flowers-by-the-window.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
   },
 ];
 

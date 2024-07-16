@@ -13,7 +13,7 @@ export default function Navbar() {
         </p>
       </div>
 
-      <div className="flex items-center">
+      <div className="flex items-center ">
         <Link className="btn" href={"/sign-in"}>
           Sign In
         </Link>
