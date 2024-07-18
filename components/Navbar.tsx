@@ -15,6 +15,19 @@ export default function Navbar() {
         setIsPopupVisible(false);
       }
     }
+
+
+
+    document.addEventListener("click", handleClickOutside);
+
+
+    if (!isPopupVisibile) {
+      document.removeEventListener("click", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    }
   }, [isPopupVisibile]);
 
   return (
