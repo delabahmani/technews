@@ -1,11 +1,30 @@
 "use client";
-import { categoriesData } from "@/data";
+import { TCategory } from "@/app/types";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function CreatePostForm() {
   const [links, setLinks] = useState<string[]>([]);
   const [linkInput, setLinkInput] = useState("");
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [categories, setCategories] = useState<TCategory[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [publicId, setPublicId] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter()
+
+  useEffect(() => {
+    const fetchAllCategories = async () => {
+      const res = await fetch("api/categories");
+      const catNames = await res.json();
+      setCategories(catNames);
+    };
+
+    fetchAllCategories();
+  }, []);
 
   const addLink = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -16,15 +35,54 @@ export default function CreatePostForm() {
   };
 
   const deleteLink = (index: number) => {
-    setLinks((prev) => prev.filter((_, i) => i !== index))
-  }
+    setLinks((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!title || !content) {
+      setError("Title and Content are required!");
+      return;
+    }
+
+    try {
+      const res = await fetch("api/posts/", {
+        method: "POST",
+        headers: {
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          content,
+          links,
+          selectedCategory,
+          imageUrl,
+          publicId,
+        }),
+      });
+
+      if (res.ok) {
+        router.push('/dashboard')
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  };
 
   return (
     <div>
       <h2>Create Post</h2>
-      <form className="flex flex-col gap-2">
-        <input type="text" placeholder="Title" />
-        <textarea placeholder="Content"></textarea>
+      <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Title"
+          onChange={(e) => setTitle(e.target.value)}
+        />
+        <textarea
+          placeholder="Content"
+          onChange={(e) => setContent(e.target.value)}
+        ></textarea>
 
         {links &&
           links.map((link, i) => (
@@ -88,12 +146,15 @@ export default function CreatePostForm() {
             Add
           </button>
         </div>
-        <select className="p-2 rounded-md border appearance-none">
+        <select
+          onChange={(e) => setSelectedCategory(e.target.value)}
+          className="p-2 rounded-md border appearance-none"
+        >
           <option value="">Category</option>
-          {categoriesData &&
-            categoriesData.map((category) => (
-              <option key={category.id} value={category.name}>
-                {category.name}
+          {categories &&
+            categories.map((category) => (
+              <option key={category.id} value={category.catName}>
+                {category.catName}
               </option>
             ))}
         </select>
@@ -102,7 +163,7 @@ export default function CreatePostForm() {
           Create Post
         </button>
 
-        <div className="p-2 text-red-500 font-bold">Error</div>
+        {error && <div className="p-2 text-red-500 font-bold">{error}</div>}
       </form>
     </div>
   );
