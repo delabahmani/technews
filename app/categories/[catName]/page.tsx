@@ -6,7 +6,7 @@ const getPosts = async (catName: string) => {
   try {
     const res = await fetch(
       `${process.env.NEXTAUTH_URL}/api/categories/${catName}`,
-      { cache: "no-store" }
+      { cache: "no-cache" }
     );
 
     if (res.ok) {

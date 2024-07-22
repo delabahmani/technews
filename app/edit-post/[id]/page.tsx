@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 const getPost = async (id: string): Promise<TPost | null> => {
   try {
     const res = await fetch(`${process.env.NEXTAUTH_URL}/api/posts/${id}`, {
-      cache: "no-store",
+      cache: "no-cache",
     });
     if (res.ok) {
       const post = await res.json();
