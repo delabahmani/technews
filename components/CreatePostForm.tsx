@@ -8,6 +8,7 @@ import {
   CloudinaryUploadWidgetResults,
 } from "next-cloudinary";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 export default function CreatePostForm() {
   const [links, setLinks] = useState<string[]>([]);
@@ -18,7 +19,6 @@ export default function CreatePostForm() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [publicId, setPublicId] = useState("");
-  const [error, setError] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -80,7 +80,8 @@ export default function CreatePostForm() {
     e.preventDefault();
 
     if (!title || !content) {
-      setError("Title and Content are required!");
+      const errorMessage = "Title and content are required!"
+      toast.error(errorMessage)
       return;
     }
 
@@ -101,7 +102,10 @@ export default function CreatePostForm() {
       });
 
       if (res.ok) {
+        toast.success("Post created successfully!")
         router.push("/dashboard");
+      } else {
+        toast.error("Something went wrong")
       }
     } catch (error) {
       console.log(error);
@@ -245,7 +249,6 @@ export default function CreatePostForm() {
           Create Post
         </button>
 
-        {error && <div className="p-2 text-red-500 font-bold">{error}</div>}
       </form>
     </div>
   );
