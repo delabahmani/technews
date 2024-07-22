@@ -68,7 +68,7 @@ export default async function Post({
           />
         ) : (
           <Image
-            src={"/thumbnail-placeholder.jpg"}
+            src={"/thumbnail-placeholder.png"}
             alt={title}
             fill
             className="object-cover rounded-md object-center"

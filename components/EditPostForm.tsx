@@ -120,6 +120,7 @@ export default function EditPostForm({ post }: { post: TPost }) {
       if (res.ok) {
         toast.success("Post edited successfully")
         router.push("/dashboard");
+        router.refresh();
         
       }
     } catch (error) {
