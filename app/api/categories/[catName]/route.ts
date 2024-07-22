@@ -7,11 +7,8 @@ export async function GET(
 ) {
   try {
     const catName = params.catName;
-    const posts = await prisma.category.findUnique({
+    const posts = await prisma.post.findMany({
       where: { catName },
-      include: {
-        post: { include: { author: true }, orderBy: { createdAt: "desc" } },
-      },
     });
     return NextResponse.json(posts);
   } catch (error) {

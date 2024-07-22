@@ -1,5 +1,5 @@
 "use client";
-import { TCategory } from "@/app/types";
+import { TCategory, TPost } from "@/app/types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -9,7 +9,7 @@ import {
 } from "next-cloudinary";
 import Image from "next/image";
 
-export default function CreatePostForm() {
+export default function EditPostForm({ post }: { post: TPost }) {
   const [links, setLinks] = useState<string[]>([]);
   const [linkInput, setLinkInput] = useState("");
   const [title, setTitle] = useState("");
@@ -29,10 +29,27 @@ export default function CreatePostForm() {
     };
 
     fetchAllCategories();
-  }, []);
+
+    const initValues = () => {
+      setTitle(post.title);
+      setContent(post.content);
+      setImageUrl(post.imageUrl || "");
+      setPublicId(post.publicId || "");
+      setSelectedCategory(post.catName || "");
+      setLinks(post.links || []);
+    };
+
+    initValues();
+  }, [
+    post.title,
+    post.content,
+    post.imageUrl,
+    post.publicId,
+    post.catName,
+    post.links,
+  ]);
 
   const handleImageUpload = (result: CloudinaryUploadWidgetResults) => {
-    console.log("result: ", result);
     const info = result.info as object;
 
     if ("secure_url" in info && "public_id" in info) {
@@ -42,6 +59,25 @@ export default function CreatePostForm() {
       setPublicId(public_id);
       console.log("url: ", url);
       console.log("public_id: ", public_id);
+    }
+  };
+
+  const removeImage = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("/api/removeImage", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ publicId }),
+      });
+
+      if (res.ok) {
+        setImageUrl("");
+        setPublicId("");
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -57,25 +93,6 @@ export default function CreatePostForm() {
     setLinks((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const removeImage = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      const res = await fetch("api/removeImage", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ publicId }),
-      });
-
-      if (res.ok) {
-        setImageUrl("");
-        setPublicId("");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -85,8 +102,8 @@ export default function CreatePostForm() {
     }
 
     try {
-      const res = await fetch("api/posts/", {
-        method: "POST",
+      const res = await fetch(`/api/posts/${post.id}`, {
+        method: "PUT",
         headers: {
           "Content-type": "application/json",
         },
@@ -116,10 +133,12 @@ export default function CreatePostForm() {
           type="text"
           placeholder="Title"
           onChange={(e) => setTitle(e.target.value)}
+          value={title}
         />
         <textarea
           placeholder="Content"
           onChange={(e) => setContent(e.target.value)}
+          value={content}
         ></textarea>
 
         {links &&
@@ -184,7 +203,6 @@ export default function CreatePostForm() {
             Add
           </button>
         </div>
-
         <CldUploadButton
           uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
           className={`h-48 border-2 mt-4 border-dotted grid place-items-center bg-slate-100 rounded-md relative ${
@@ -227,12 +245,14 @@ export default function CreatePostForm() {
             Remove Image
           </button>
         )}
-
         <select
           onChange={(e) => setSelectedCategory(e.target.value)}
           className="p-2 rounded-md border appearance-none"
+          value={selectedCategory}
         >
-          <option value="">Category</option>
+          <option value="" disabled>
+            Select a Category
+          </option>
           {categories &&
             categories.map((category) => (
               <option key={category.id} value={category.catName}>
@@ -242,7 +262,7 @@ export default function CreatePostForm() {
         </select>
 
         <button type="submit" className="primary-btn">
-          Create Post
+          Update Post
         </button>
 
         {error && <div className="p-2 text-red-500 font-bold">{error}</div>}

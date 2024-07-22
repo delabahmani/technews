@@ -27,7 +27,6 @@ export default async function Post({
   links,
   category,
 }: PostProps) {
-
   const session = await getServerSession(authOptions);
 
   const isEditable = session && session?.user?.email === authorEmail;
@@ -39,12 +38,24 @@ export default async function Post({
     year: "numeric",
   };
 
-  const formattedDate = dateObject.toLocaleDateString('en-US', options);
+  const formattedDate = dateObject.toLocaleDateString("en-US", options);
 
   return (
     <div className="my-4 border-b border-b-300 py-8 ">
       <div className="mb-4 ">
-        Posted by: <span className="font-bold">{author}</span> on {formattedDate}
+        {author ? (
+          <>
+            {" "}
+            Posted by: <span className="font-bold">{author}</span> on{" "}
+            {formattedDate}{" "}
+          </>
+        ) : (
+          <>
+            {" "}
+            Posted on {" "}
+            {formattedDate}{" "}
+          </>
+        )}
       </div>
 
       <div className="w-full h-72 relative ">
@@ -95,21 +106,19 @@ export default async function Post({
                 />
               </svg>
               <Link className="link" href={link}>
-              {link}
+                {link}
               </Link>
             </div>
           ))}
         </div>
       )}
 
-      {
-        isEditable && (
-          <div className="flex gap-3 font-bold py-2 px-4 rounded-md bg-slate-200 w-fit ">
-            <Link href={`/edit-post/${id}`}>Edit</Link>
-            <DeleteButton id={id}/>
-          </div>
-        )
-      }
+      {isEditable && (
+        <div className="flex gap-3 font-bold py-2 px-4 rounded-md bg-slate-200 w-fit ">
+          <Link href={`/edit-post/${id}`}>Edit</Link>
+          <DeleteButton id={id} />
+        </div>
+      )}
     </div>
   );
 }
