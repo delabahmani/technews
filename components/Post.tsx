@@ -4,7 +4,6 @@ import DeleteButton from "./DeleteButton";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 
-
 interface PostProps {
   id: string;
   author: string;
@@ -42,20 +41,19 @@ export default async function Post({
   const formattedDate = dateObject.toLocaleDateString("en-US", options);
 
   return (
-    <div className="my-4 border-b border-b-300 py-8 ">
+    <div className="my-4 border-b border-b-300 py-8">
       <div className="mb-4 ">
         {author ? (
           <>
             {" "}
-            Posted by: <span className="font-bold">{author}</span> on{" "}
+            Posted by: <span className="font-bold capitalize">{author}</span>
+            <br></br>
+            <p className="text-sm font-semibold">
             {formattedDate}{" "}
+            </p>
           </>
         ) : (
-          <>
-            {" "}
-            Posted on {" "}
-            {formattedDate}{" "}
-          </>
+          <> Posted on {formattedDate} </>
         )}
       </div>
 
