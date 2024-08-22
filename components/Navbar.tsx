@@ -16,8 +16,6 @@ export default function Navbar() {
       }
     }
 
-
-
     document.addEventListener("click", handleClickOutside);
 
 
